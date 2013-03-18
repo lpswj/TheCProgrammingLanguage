@@ -1,0 +1,26 @@
+//output each  word per line
+#include <stdio.h>
+
+#define BEGIN 1
+#define END 0
+
+main()
+{
+	int c,state;
+
+	state = BEGIN;
+	while ((c = getchar()) != EOF)
+	{
+		if(c == ' ' || c == '\n' || c == '\t')
+		{
+				state = END;
+				putchar('\n');
+		}
+		else 
+		{
+				state = BEGIN;			
+				putchar(c);
+		}
+	}
+
+}
