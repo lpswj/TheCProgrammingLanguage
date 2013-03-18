@@ -1,5 +1,4 @@
-//read a array of text,and print longest line.
-//Date:2013.01.28 unfinished
+//del the blank or the tab in the input line,and del the blank line.
 //Date:2013.03.18
 
 #include <stdio.h>
@@ -14,16 +13,17 @@ int main()
 	int len;
 	int max;
 	char line[MAXLINE];
-	char longest[MAXLINE];
 
-	max=0;
 	while((len=getline(line,MAXLINE))>0)
-			if(len>max){
-				max=len;
-				copy(longest,line);
+	{
+			while(line[len-2]==' '||line[len-2]=='\t')
+					--len;
+			if(len>1)
+			{
+			for (int i=0;i<len;i++)
+					printf("%c",line[i]);
 			}
-	if(max>0)
-			printf("%s",longest);
+	}	
 	return 0;
 }
 

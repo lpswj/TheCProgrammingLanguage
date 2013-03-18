@@ -1,9 +1,9 @@
-//read a array of text,and print longest line.
-//Date:2013.01.28 unfinished
+//type out the line whose length is over 80 
 //Date:2013.03.18
 
 #include <stdio.h>
 #define MAXLINE 1000	/* the max line length to input */
+#define POINT 80
 
 int getline(char line[],int maxline);
 void copy(char to[],char from[]);
@@ -12,18 +12,11 @@ void copy(char to[],char from[]);
 int main()
 {
 	int len;
-	int max;
 	char line[MAXLINE];
-	char longest[MAXLINE];
-
-	max=0;
 	while((len=getline(line,MAXLINE))>0)
-			if(len>max){
-				max=len;
-				copy(longest,line);
+			if(len>POINT){
+				printf("%s",line);
 			}
-	if(max>0)
-			printf("%s",longest);
 	return 0;
 }
 
@@ -41,11 +34,3 @@ int getline(char s[],int lim)
 	return i;
 }
 
-void copy(char to[],char from[])
-{
-	int i;
-
-	i=0;
-	while((to[i]=from[i])!='\0')
-			++i;
-}
