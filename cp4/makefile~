@@ -1,0 +1,13 @@
+objects=4-2.o getline.o atof.o
+
+
+test:$(objects)
+	gcc -std=c99 -g -Werror $(objects) -o test -lm 
+4-2.o:
+	gcc -c -std=c99 4-2.c -o 4-2.o
+getline.o:
+	gcc -c -std=c99 getline.c -o getline.o
+atof.o:
+	gcc -c -std=c99 atof.c -o atof.o 
+clean:
+	rm  $(objects) test

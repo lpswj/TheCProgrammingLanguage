@@ -37,5 +37,5 @@ double atof(char s[])
 	{
 		epow=10.0*epow+(s[i]-'0');
 	}
-	return sign*val*pow(10.0,epow*esign)/power;
+	return sign*val*pow(10,epow*esign)/power;
 }
