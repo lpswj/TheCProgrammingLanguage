@@ -1,6 +1,7 @@
 //add the % function
 #include <stdio.h>
 #include <stdlib.h> /* for atof() */
+#include <math.h>
 
 #define MAXOP 100	/* max size fo operand or operator */
 #define NUMBER '0'	/* signal that a number was found */
@@ -38,13 +39,25 @@ main()
 							else
 									printf("error:zero divisor\n");
 							break;
+/*
 					case '%':
 							op2=pop();
 							if(op2!=0.0)
 									push((int)pop()%(int)op2);
 							else 
 									printf("error:zero divisor\n");
+
+							break;	
+*/
+					/* another try on % by using fmod */
+					case '%':
+							op2=pop();
+							if(op2)
+									push(fmod(pop(),op2));
+							else
+									printf("\nError:Zero Divisor\n");
 							break;
+
 					case '\n':
 							printf("\t%.8g\n",pop());
 							break;
@@ -94,7 +107,9 @@ double pop(void)
  *
  *getop.c
  *
- *
+ *Deal with unary minus when retrieving tokens.This is based on
+ *the fact that a unary minus will have no interverning space 
+ *between it and its operand.
  */
 
 #include <ctype.h>
@@ -105,17 +120,28 @@ void ungetch(int);
 /* getop: get next character or numeric operand */
 int getop(char s[])
 {
-	int i,c;
+	int i=0,c,next;
 
 	while((s[0]=c=getch())==' ' ||c=='\t')
 			;
 	s[1]='\0';
-	if(!isdigit(c)&&c!='.')
+	/* Not a number but may contain a unary minus. */
+	if(!isdigit(c)&&c!='.'&&c!='-')
 			return c;
-	i=0;
-	if(isdigit(c))
-			while(isdigit(s[++i]=c=getch()))
-					;
+
+ 	if(c=='-')
+	{
+		next=getch();
+		if(!isdigit(next)&&next != '.')
+		{
+			return c;
+		}
+		c=next;
+	}	
+	else
+			c=getch();
+	while(isdigit(s[++i]=c))
+			c=getch();
 	if(c=='.')
 			while(isdigit(s[++i]=c=getch()))
 					;

@@ -11,8 +11,9 @@ double pop(void);
 
 /*new add*/
 double printop(void);
-double copytop(void);
-void swap(double);
+double printstack(void);
+void copy(void);
+void swap(void);
 void clear(void);
 
 
@@ -20,7 +21,7 @@ void clear(void);
 main()
 {
 	int type;
-	double op2;
+	double op2,result;
 	char s[MAXOP];
 	
 	while((type=getop(s))!=EOF){
@@ -54,7 +55,26 @@ main()
 									printf("error:zero divisor\n");
 							break;
 					case '\n':
-							printf("\t%.8g\n",pop());
+						//	printf("\t%.8g\n",pop());
+							break;
+					/* print the top element and not push */
+					case 'p':
+							printop();
+							break;
+					/* copy the top element and print it */
+					case 'c':
+							copy();
+							break;
+					/* print the stack */
+					case 'P':
+							printstack();
+							break;
+					/* swap the top two element */
+					case 's':
+							swap();
+							break;
+					case 'C':
+							clear();
 							break;
 					default:
 							printf("error:unknown command %s\n",s);
@@ -100,14 +120,49 @@ double pop(void)
 
 double printop(void)
 {
-	int index=sp;
 	if(sp>0)
-		 return val[--index];
+		 printf("Top element is %g\n",val[sp-1]);
 	else
 	{
 		printf("error:stack empty\n");
 		return 0.0;
 	}
+}
+
+double printstack(void)
+{
+	int i;
+	if(sp>0)
+	{
+		printf("the stack is :");
+		for(i=0;i<sp;i++)
+				printf("%g ",val[i]);
+	}
+	else
+	{
+		printf("error:stack empty\n");
+	}
+}
+
+void copy(void)
+{
+	double temp=pop();
+	push(temp);
+	push(temp);
+}
+
+void swap(void)
+{
+	double t1,t2;
+	t1=pop();
+	t2=pop();
+	push(t1);
+	push(t2);
+}
+
+void clear(void)
+{
+	sp=0;
 }
 
 /*
@@ -125,17 +180,24 @@ void ungetch(int);
 /* getop: get next character or numeric operand */
 int getop(char s[])
 {
-	int i,c;
+	int i=0,c,next;
 
 	while((s[0]=c=getch())==' ' ||c=='\t')
 			;
 	s[1]='\0';
-	if(!isdigit(c)&&c!='.')
+	if(!isdigit(c)&&c!='.'&&c!='-')
 			return c;
-	i=0;
-	if(isdigit(c))
-			while(isdigit(s[++i]=c=getch()))
-					;
+	if(c=='-')
+	{
+		next=getch();
+		if(!isdigit(next) && next !='.')
+				return next;
+		c=next;
+	}
+	else 
+			c=getch();
+	while(isdigit(s[++i]=c))
+			c=getch();
 	if(c=='.')
 			while(isdigit(s[++i]=c=getch()))
 					;
