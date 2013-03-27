@@ -16,13 +16,12 @@ struct varType
 {
 	char name[MAX_ID_LEN];
 	double val;
-}
+};
 
 int getop(char []);
 void push(double);
 double pop(void);
 
-/*new add*/
 double printop(void);
 double printstack(void);
 void copy(void);
@@ -99,7 +98,7 @@ main()
 							swap();
 							break;
 					case 'C':
-							clear();
+							clearStacks(var);
 							break;
 					case ENDSTRING:
 							break;
@@ -248,11 +247,11 @@ void dealWithVar(char s[],struct varType var[])
 		{
 				strcpy(last.name,s);
 				last.val=var[i].val;
-				push(var[i],val);
+				push(var[i].val);
 				pos=i;
 				return ;
 		}
-		i++
+		i++;
 	}
 	/* variable name not found so add it */
 	strcpy(var[i].name,s);

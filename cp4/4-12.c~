@@ -1,0 +1,12 @@
+/* itoa:recurise version  */
+#include <stdio.h>
+
+void itoa(int t);
+
+main()
+{
+
+}
+
+
+
