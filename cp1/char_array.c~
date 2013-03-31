@@ -3,9 +3,10 @@
 //Date:2013.03.18
 
 #include <stdio.h>
+#include <string.h>
 #define MAXLINE 1000	/* the max line length to input */
 
-int getline(char line[],int maxline);
+int getline(char *s,int maxline);
 void copy(char to[],char from[]);
 
 /*type the longest line */
@@ -28,17 +29,18 @@ int main()
 }
 
 /* getline function :read a line to the s and return its length */
-int getline(char s[],int lim)
+int getline(char *s,int lim)
 {
-	int c ,i ;
-	for (i=0;i<lim-1 && (c=getchar())!=EOF&&c!='\n';++i)
-			s[i]=c;
-	if(c=='\n'){
-		s[i]=c;
-		++i;
-	}
-	s[i]='\0';
-	return i;
+	int c ;
+	char *p;
+
+	p=s;
+	while(--lim>0 && (c=getchar()) != EOF && c != '\n')
+			*p++=c;
+	if(c=='\n')
+			*p++=c;
+	*p='\0';
+	return (int)(p-s);
 }
 
 void copy(char to[],char from[])

@@ -9,12 +9,15 @@ int strcmp1(char *s,char *t);
 int strlen(char *s);
 void strcat(char *s,char *t);
 int strend(char *s,char *t);
+void strncpy(char *s,char *t,int n);
+void strncat(char *s,char *t,int n);
+int strncmp(char *s,char *t,int n);
 
 main()
 {
-	char s[]="abcdefg";
-	char t[]="efg";
-	printf("%d\n",strend(s,t));
+	char s[]="azc";
+	char t[]="afgdada";
+	printf("%d\n",strncmp(s,t,2));
 }
 
 
@@ -95,3 +98,45 @@ int strend(char *s,char *t)
 	else 
 			return 0;
 }	
+
+/* strncpy: copy n element in the head of t to s */
+void strncpy(char *s,char *t,int n)
+{
+	int i=0,count;
+
+	int len=strlen(t);
+	count=(len>n)?n:len;
+	while(i<count){
+			*s++=*t++;
+			i++;
+	}
+	*s='\0';
+}
+
+/* strncat:cat the n element of t to the s */
+void strncat(char *s,char *t,int n)
+{
+	
+	int i=0,count;
+
+	int len=strlen(t);
+	s += strlen(s);
+	count=(len>n)?n:len;
+	while(i<count){
+			*s++=*t++;
+			i++;
+	}
+	*s='\0';
+}
+
+/* strncmp:compare the first n element of s to t */
+int strncmp(char *s,char *t,int n)
+{
+	int i;
+	for(i=0;i<n && *s==*t;i++,s++,t++)
+			;
+	if(i==n)
+			return 0;
+	else
+			return *s-*t;
+}
